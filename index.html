@@ -75,13 +75,21 @@ section,.entry,.reg{scroll-margin-top:68px}
 .brand:hover{color:var(--ink)}
 .bar-links{display:flex;gap:20px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;font-size:14px;padding-block:14px}
 .bar-links::-webkit-scrollbar{display:none}
-.bar-links a{color:var(--muted);text-decoration:none}
+.bar-links{position:relative}
+.bar-links a{color:var(--muted);text-decoration:none;position:relative}
 .bar-links a:hover{color:var(--ink)}
+.bar-links a[aria-current="true"]{color:var(--ink)}
+.bar-links a[aria-current="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-15px;height:2px;border-radius:2px;background:var(--accent)}
+.brand{display:inline-flex;align-items:center;gap:9px}
+.brand-mark{width:22px;height:22px;flex:none;border-radius:6px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center}
+.brand-mark svg{width:14px;height:14px}
+::selection{background:var(--accent-soft);color:var(--ink)}
 
 .wrap{max-width:62rem;margin:0 auto;padding-inline:max(16px,4vw);padding-block:0 80px}
 
 /* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:48px;align-items:end;padding-block:64px 40px}
+.hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:48px;align-items:end;padding-block:72px 44px}
+.hero::before{content:"";position:absolute;z-index:-1;inset:0 calc(-1 * max(16px,4vw));background-image:radial-gradient(var(--rule-strong) 1px,transparent 1.2px);background-size:22px 22px;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 78% 40%,#000 0%,transparent 72%);mask-image:radial-gradient(ellipse 70% 80% at 78% 40%,#000 0%,transparent 72%);opacity:.7;pointer-events:none}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
 h1{font-family:var(--cond);font-weight:600;font-size:clamp(46px,7.4vw,76px);line-height:.98;letter-spacing:-.025em;margin:0 0 20px}
 .lede{font-size:clamp(18px,2vw,20px);line-height:1.5;color:var(--ink-2);max-width:36rem;margin:0 0 22px}
@@ -93,7 +101,18 @@ h1{font-family:var(--cond);font-weight:600;font-size:clamp(46px,7.4vw,76px);line
 .button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .button.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--on-accent)}
 
-.rule-card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:22px 24px}
+.rule-card{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:22px 24px;box-shadow:0 1px 2px rgba(19,28,34,.04),0 12px 32px -12px rgba(19,28,34,.16)}
+.timeline{display:block;width:100%;max-width:330px;height:auto;margin:2px 0 14px;overflow:visible}
+.timeline .axis{stroke:var(--rule-strong);stroke-width:1.5;fill:none}
+.timeline .late{fill:var(--warn-soft)}
+.timeline .late-t{fill:var(--warn)}
+.timeline .ok{stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.timeline .ok-t{fill:var(--accent)}
+.timeline .avail{fill:var(--accent)}
+.timeline .decide{stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.timeline .leak{fill:var(--surface);stroke:var(--warn);stroke-width:2}
+.timeline text{font-family:var(--mono);font-size:11.5px;fill:var(--muted)}
+.timeline .lab{fill:var(--ink-2);font-size:12px}
 .rule-card .label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
 .formula{font-family:var(--mono);font-size:clamp(26px,3.2vw,32px);font-weight:500;letter-spacing:-.01em;color:var(--accent);margin:0 0 12px;white-space:nowrap}
 .rule-card .gloss{font-size:15px;line-height:1.5;margin:0 0 14px}
@@ -102,14 +121,22 @@ h1{font-family:var(--cond);font-weight:600;font-size:clamp(46px,7.4vw,76px);line
 .legend dd{margin:0}
 .rule-card .cite{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin:12px 0 0}
 
-.facts{display:flex;flex-wrap:wrap;gap:6px 0;margin:0;padding:16px 0 0;list-style:none;border-top:1px solid var(--rule);font-family:var(--mono);font-size:13px;color:var(--muted)}
-.facts li{padding-right:14px;margin-right:14px;border-right:1px solid var(--rule)}
-.facts li:last-child{border-right:0;margin-right:0;padding-right:0}
-.facts b{font-weight:500;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:0;padding:0;list-style:none;background:var(--surface);border:1px solid var(--rule);border-radius:14px}
+.stat{display:flex;flex-direction:column;gap:2px;padding:16px 18px;border-left:1px solid var(--rule);min-width:0}
+.stat:first-child{border-left:0}
+.stat-n{font-family:var(--cond);font-weight:600;font-size:30px;line-height:1.1;letter-spacing:-.01em;color:var(--ink);font-variant-numeric:tabular-nums}
+.stat-n small{font-size:.55em;font-weight:500;color:var(--faint);margin-left:2px}
+.stat-l{font-size:13px;line-height:1.35;color:var(--muted)}
+.meter{display:grid;grid-template-columns:repeat(11,1fr);gap:2px;margin-top:8px;max-width:9rem}
+.meter i{height:6px;border-radius:2px;background:var(--rule)}
+.meter i.on{background:var(--accent)}
 
 /* sections */
 section{margin-top:76px}
+main{counter-reset:sec}
+main>section{counter-increment:sec;margin-top:88px;padding-top:30px;border-top:1px solid var(--rule)}
 h2{font-family:var(--cond);font-weight:600;font-size:clamp(26px,3vw,31px);line-height:1.15;letter-spacing:-.01em;margin:0 0 14px}
+main>section>h2::before{content:counter(sec,decimal-leading-zero);display:block;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--accent);margin:0 0 8px}
 .prose p{max-width:41rem;margin:0 0 16px}
 .prose p strong{font-weight:600}
 p.intro{max-width:41rem;margin:0 0 22px;color:var(--ink-2)}
@@ -119,14 +146,16 @@ h3.sub .count{color:var(--faint)}
 
 /* the tool: built checks are lifted, planned ones are not */
 .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.check{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
+.check{background:var(--surface) linear-gradient(var(--accent),var(--accent)) top/100% 3px no-repeat;border:1px solid var(--rule);border-radius:12px;padding:20px 20px 16px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+.check:hover{border-color:var(--rule-strong);box-shadow:0 10px 28px -14px rgba(19,28,34,.22);transform:translateY(-1px)}
+.status::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:.1em}
 .check-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .status{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.04em;padding:1px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
 .kind{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .check h4{font-family:var(--cond);font-weight:600;font-size:20px;line-height:1.25;margin:4px 0 0}
 .check p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2)}
-.planned{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px}
-.planned li{padding:10px 0 10px 16px;border-left:2px dashed var(--rule-strong)}
+.planned{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}
+.planned li{padding:13px 18px;border:1px dashed var(--rule-strong);border-radius:12px}
 .planned .name{font-weight:600}
 .planned .kind{margin-left:8px}
 .planned p{margin:2px 0 0;font-size:14.5px;line-height:1.5;color:var(--muted)}
@@ -158,7 +187,12 @@ dl.meta{display:grid;grid-template-columns:7.5rem 1fr;gap:6px 16px;margin:0 0 16
 dl.meta dt{color:var(--muted)}
 dl.meta dd{margin:0;font-family:var(--mono);font-size:13px;word-break:break-all}
 dl.meta dd.plain{font-family:var(--sans);font-size:14px;word-break:normal}
-.fulltext>summary{cursor:pointer;color:var(--accent);font-weight:500;font-size:14px;width:max-content;max-width:100%}
+.reg{background:var(--surface) linear-gradient(var(--accent),var(--accent)) top/100% 3px no-repeat}
+.fulltext>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:500;font-size:14px;padding:7px 14px;border:1px solid var(--rule-strong);border-radius:8px;max-width:100%}
+.fulltext>summary::-webkit-details-marker{display:none}
+.fulltext>summary::before{content:"›";display:inline-block;font-size:16px;line-height:1;transition:transform .15s ease}
+.fulltext>summary:hover{border-color:var(--accent);background:var(--accent-soft)}
+.fulltext[open]>summary::before{transform:rotate(90deg)}
 .fulltext[open]>summary{margin-bottom:12px}
 .fulltext .doc{border:0;padding:4px 0 0;background:none}
 
@@ -169,7 +203,9 @@ dl.meta dd.plain{font-family:var(--sans);font-size:14px;word-break:normal}
 #filter-count{font-family:var(--mono);font-size:13px;color:var(--muted)}
 .index-scroll{max-height:32rem;overflow:auto;border:1px solid var(--rule);border-radius:12px;background:var(--surface)}
 .index-scroll table{min-width:34rem}
-.index-scroll th{position:sticky;top:0;background:var(--surface);z-index:1}
+.index-scroll th{position:sticky;top:0;background:var(--surface);z-index:1;box-shadow:inset 0 -1px 0 var(--rule-strong)}
+.index-scroll tbody tr:hover td{background:var(--sunk)}
+.index-scroll tbody tr:last-child td{border-bottom:0}
 .index-scroll th:first-child,.index-scroll td:first-child{padding-left:16px}
 .index-scroll td:nth-child(3){font-size:13px}
 .chip{display:inline-block;font-family:var(--mono);font-size:12px;line-height:1.5;padding:0 8px;border-radius:999px;border:1px solid var(--rule);white-space:nowrap;color:var(--muted)}
@@ -183,7 +219,10 @@ dl.meta dd.plain{font-family:var(--sans);font-size:14px;word-break:normal}
 .btn:hover{border-color:var(--faint)}
 .entry{border-top:1px solid var(--rule)}
 .entry:last-of-type{border-bottom:1px solid var(--rule)}
-.entry>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1rem 4.6rem 6.6rem 1fr;gap:0 10px;align-items:baseline;padding:11px 0}
+.entry>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1rem 4.6rem 6.6rem 1fr;gap:0 10px;align-items:baseline;padding:11px 10px;margin:0 -10px;border-radius:8px;transition:background-color .12s ease}
+.entry>summary:hover{background:var(--sunk)}
+.entry[open]>summary{position:sticky;top:calc(53px + env(safe-area-inset-top,0px));z-index:5;background:var(--ground);border-radius:0;box-shadow:0 1px 0 var(--rule)}
+.entry[open]>summary .num{color:var(--accent)}
 .entry>summary::-webkit-details-marker{display:none}
 .entry>summary::before{content:"›";color:var(--faint);display:inline-block;transition:transform .15s ease;font-size:16px;line-height:1}
 .entry[open]>summary::before{transform:rotate(90deg)}
@@ -205,7 +244,8 @@ dl.meta dd.plain{font-family:var(--sans);font-size:14px;word-break:normal}
 .doc pre.plain{background:none;padding:0;border-radius:0;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.6;color:var(--ink)}
 .doc code{font-size:.9em;background:var(--code);padding:.08em .32em;border-radius:4px}
 .doc pre code{background:none;padding:0;font-size:inherit}
-.doc blockquote{margin:12px 0;padding:2px 0 2px 14px;border-left:3px solid var(--rule)}
+.doc blockquote{margin:12px 0;padding:4px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0}
+.doc blockquote>p{margin:6px 0}
 .doc hr{border:0;border-top:1px solid var(--rule);margin:22px 0}
 .doc table{font-size:13px}
 .doc .tbl{margin:12px 0}
@@ -215,6 +255,16 @@ dl.meta dd.plain{font-family:var(--sans);font-size:14px;word-break:normal}
 footer{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
 footer p{max-width:46rem;margin:0 0 6px}
 
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:30;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:var(--surface);color:var(--ink);border:1px solid var(--rule-strong);box-shadow:0 8px 24px -10px rgba(19,28,34,.35);text-decoration:none;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.to-top.show{opacity:1;transform:none;pointer-events:auto}
+.to-top:hover{color:var(--accent);border-color:var(--accent)}
+.to-top svg{width:18px;height:18px}
+
+@media (max-width:900px){
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stat:nth-child(3n+1){border-left:0}
+  .stat:nth-child(n+4){border-top:1px solid var(--rule)}
+}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:28px;padding-block:40px 28px}
   .around{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -222,6 +272,13 @@ footer p{max-width:46rem;margin:0 0 6px}
 }
 @media (max-width:560px){
   .checks,.planned,.around{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(n){border-left:1px solid var(--rule);border-top:0}
+  .stat:nth-child(odd){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--rule)}
+  .stat{padding:14px 16px}
+  .stat-n{font-size:26px}
+  .bar-links a[aria-current="true"]::after{display:none}
   .entry>summary{grid-template-columns:1rem 4.6rem 1fr}
   .entry .first{grid-column:2/-1}
   dl.terms{grid-template-columns:minmax(0,1fr)}
@@ -244,7 +301,7 @@ footer p{max-width:46rem;margin:0 0 6px}
 <body>
 <nav class="bar" aria-label="Sections">
   <div class="bar-in">
-    <a class="brand" href="#top">leakaudit</a>
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M21 8 10 13.5 21 19M10 23.5h11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>leakaudit</a>
     <div class="bar-links">
       <a href="#tool">The tool</a>
       <a href="#contents">This record</a>
@@ -274,6 +331,19 @@ footer p{max-width:46rem;margin:0 0 6px}
     <p class="label">The rule it tests</p>
     <p class="formula">a(j,&#8201;c) ≤ d(i)</p>
     <p class="gloss">A value may feed a decision only if it had become available by the time that decision was made.</p>
+    <svg class="timeline" viewBox="0 0 260 76" role="img" aria-label="A timeline: a value that became available before decision i may be used; a value that became available after it may not.">
+      <rect class="late" x="168" y="20" width="84" height="28" rx="4"/>
+      <text class="late-t" x="210" y="13" text-anchor="middle">too late</text>
+      <path class="axis" d="M4 34H255M250 29.5l5 4.5-5 4.5"/>
+      <line class="ok" x1="52" y1="34" x2="163" y2="34"/>
+      <text class="ok-t" x="108" y="25" text-anchor="middle">usable</text>
+      <circle class="avail" cx="52" cy="34" r="5.5"/>
+      <line class="decide" x1="168" y1="16" x2="168" y2="52"/>
+      <circle class="leak" cx="212" cy="34" r="5"/>
+      <text class="lab" x="52" y="70" text-anchor="middle">a(j, c)</text>
+      <text class="lab" x="168" y="70" text-anchor="middle">d(i)</text>
+      <text x="255" y="70" text-anchor="end">time</text>
+    </svg>
     <dl class="legend">
       <dt>a(j, c)</dt><dd>when the value in row j, column c became available</dd>
       <dt>d(i)</dt><dd>when decision i was made</dd>
@@ -282,13 +352,13 @@ footer p{max-width:46rem;margin:0 0 6px}
   </aside>
 </header>
 
-<ul class="facts">
-  <li><b>11</b> checks planned</li>
-  <li><b>4</b> built</li>
-  <li><b>214</b> plans + 9 addenda</li>
-  <li>about 278,000 words</li>
-  <li>about three months</li>
-  <li>registration v30 and v30a</li>
+<ul class="stats" aria-label="At a glance">
+  <li class="stat"><span class="stat-n">11</span><span class="stat-l">checks planned</span></li>
+  <li class="stat"><span class="stat-n">4<small>/ 11</small></span><span class="stat-l">built</span><span class="meter" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></li>
+  <li class="stat"><span class="stat-n">214</span><span class="stat-l">plans + 9 addenda</span></li>
+  <li class="stat"><span class="stat-n">~278k</span><span class="stat-l">words</span></li>
+  <li class="stat"><span class="stat-n">~3</span><span class="stat-l">months</span></li>
+  <li class="stat"><span class="stat-n">2</span><span class="stat-l">signed registrations</span></li>
 </ul>
 
 <main>
@@ -35061,6 +35131,8 @@ one: the bytes are verified against the tag, and the tag stays the authority.</p
 </footer>
 </div>
 
+<a class="to-top" id="to-top" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+
 <script>
 (function(){
   function openTarget(id){
@@ -35088,6 +35160,30 @@ one: the bytes are verified against the tag, and the tag stays the authority.</p
   function all(){ return document.querySelectorAll('#deltas details.entry'); }
   document.getElementById('expand').addEventListener('click',function(){ all().forEach(function(d){ d.open=true; }); });
   document.getElementById('collapse').addEventListener('click',function(){ all().forEach(function(d){ d.open=false; }); });
+
+  var toTop=document.getElementById('to-top');
+  var strip=document.querySelector('.bar-links');
+  var navLinks={};
+  Array.prototype.forEach.call(strip.querySelectorAll('a'),function(a){ navLinks[a.getAttribute('href').slice(1)]=a; });
+  var sections=Array.prototype.slice.call(document.querySelectorAll('main>section[id]'));
+  var current=null, ticking=false;
+  function onScroll(){
+    ticking=false;
+    toTop.classList.toggle('show',(window.scrollY||window.pageYOffset)>900);
+    var line=window.innerHeight*0.3, id=null;
+    sections.forEach(function(s){ if(s.getBoundingClientRect().top<=line) id=s.id; });
+    if(id===current) return;
+    if(current && navLinks[current]) navLinks[current].removeAttribute('aria-current');
+    current=id;
+    var a=id && navLinks[id];
+    if(!a) return;
+    a.setAttribute('aria-current','true');
+    if(a.offsetLeft<strip.scrollLeft || a.offsetLeft+a.offsetWidth>strip.scrollLeft+strip.clientWidth){
+      strip.scrollLeft=a.offsetLeft-16;
+    }
+  }
+  window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(onScroll); } },{passive:true});
+  onScroll();
 })();
 </script>
 
